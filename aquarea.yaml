@@ -1,0 +1,140 @@
+esphome:
+  name: heatpump
+
+esp8266:
+  board: d1_mini
+
+mqtt:
+  #broker: 192.168.0.1
+  #topic_prefix: null
+  #log_topic: heatpump/debug
+
+# Enable logging
+logger:
+  baud_rate: 0
+  level: DEBUG
+
+# Enable Home Assistant API
+api:
+  password: ""
+
+ota:
+  - platform: esphome
+    password: ""
+
+wifi:
+  ssid:
+  password:
+  use_address:
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Aquarea Fallback Hotspot"
+    password: "YYjYHIEMxT6q"
+
+captive_portal:
+
+external_components:
+  - source:
+      type: local
+      path: components
+
+sensor:
+  - platform: wifi_signal
+    name: 'Heatpump wifi RSSI'
+  - platform: uptime
+    name: "Heatpump uptime"
+  - platform: aquarea
+    outside_temperature:
+      name: "Outside temperature"
+    outlet_temperature:
+      name: "Outlet temperature"
+    inlet_temperature:
+      name: "Inlet temperature"
+    tank_temperature:
+      name: "Tank temperature"
+    compressor_value:
+      name: "Heatpump compressor value"
+    heat_power:
+      name: "Heat power"
+    cool_power:
+      name: "Cool power"
+    tank_power:
+      name: "Tank power"
+    pump_speed:
+      name: "Water pump speed"
+
+text_sensor:
+  platform: aquarea
+  error_code:
+    name: "Error code"
+  last_error_code:
+    name: "Last error code"
+  current_mode:
+    name: "Current operation mode"
+
+binary_sensor:
+  platform: aquarea
+  defrost:
+    name: "Defrost active"
+
+button:
+  - platform: restart
+    name: "Heatpump restart"
+  - platform: aquarea
+    reset_error:
+      name: "Reset errors"
+
+switch:
+  platform: aquarea
+  force:
+    name: "Force operation"
+
+number:
+  platform: aquarea
+  heat_out_temp_low:
+    name: "Low heat outside temperature"
+  heat_out_temp_high:
+    name: "High heat outside temperature"
+  heat_water_temp_low:
+    name: "Low heat water temperature"
+  heat_water_temp_high:
+    name: "High heat water temperature"
+  heat_off_out_temp:
+    name: "Heat off outside temperature"
+  heater_on_out_temp:
+    name: "Heater On outside temperature"
+  cool_setpoint_temp:
+    name: "Cool setpoint temperature"
+  tank_setpoint_temp:
+    name: "Tank setpoint temperature"
+  shift_setpoint_temp:
+    name: "Shift setpoint temperature"
+  pump_speed:
+    name: "Water pump speed"
+
+select:
+  platform: aquarea
+  request_mode:
+    name: "Request mode"
+    options:
+      - "off heat"
+      - "on heat"
+      - "on cool"
+      - "on tank"
+      - "on heat tank"
+      - "on cool tank"
+
+uart:
+    tx_pin:
+      number: D8
+    rx_pin:
+      number: D7
+    baud_rate: 960
+    data_bits: 8
+    stop_bits: 1
+    parity: EVEN
+
+aquarea:
+  rts_pin: D1
+
