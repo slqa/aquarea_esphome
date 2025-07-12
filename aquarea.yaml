@@ -4,7 +4,7 @@ esphome:
 esp8266:
   board: d1_mini
 
-mqtt:
+#mqtt:
   #broker: 192.168.0.1
   #topic_prefix: null
   #log_topic: heatpump/debug
@@ -23,9 +23,9 @@ ota:
     password: ""
 
 wifi:
-  ssid:
-  password:
-  use_address:
+  ssid: 'SSID'
+  password: 'PASSWORD'
+  use_address: 'IP'
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
