@@ -12,7 +12,7 @@ Thanks to this device, you are able to monitor heat pump states and issue your o
             |-------------------------|
 ```
 
-I used hardware serial on pins D8/D7 and one pin for RTS. In a 'normal' situation, the D1 Mini only listens to communication between the remote and the heat pump, so you can have entity updates.  
+I used hardware serial on pins D8/D7 and one pin for RTS from D1 Mini ESP board. In a 'normal' situation, the D1 Mini only listens to communication between the remote and the heat pump, so you can have entity updates.  
 When you want to issue a state change from Home Assistant, RTS is set, blocking communication from the remote to the heat pump. The D1 Mini then sends the command and waits for confirmation.  
 After sending commands, it returns to the 'normal' state.
 
