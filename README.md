@@ -33,6 +33,7 @@ docker run --rm -v "${PWD}":/config -it ghcr.io/esphome/esphome run aquarea.yaml
 # Thank you
 Many thanks for work done by<br>
 https://github.com/v-s-c-o-p-e/geisha_aquarea_panasonic_arduino_esp8266_proxy
+https://github.com/pemue-git/pcb/tree/master/WH-MDC05F3E5_comm
 
 ## Disclaimer of Liability
 
