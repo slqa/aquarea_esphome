@@ -11,7 +11,8 @@ Thanks to this device, you are able to monitor heat pump states and issue your o
             |      D1_Mini            |
             |-------------------------|
 ```
-
+Device consists of brige PCB and D1 mini.  
+For PCB, I have modified this one  https://github.com/pemue-git/pcb/tree/master/WH-MDC05F3E5_comm (I will post mine when I rev eng it, I lost schematic).  
 I used hardware serial on pins D8/D7 and one pin for RTS from D1 Mini ESP board. In a 'normal' situation, the D1 Mini only listens to communication between the remote and the heat pump, so you can have entity updates.  
 When you want to issue a state change from Home Assistant, RTS is set, blocking communication from the remote to the heat pump. The D1 Mini then sends the command and waits for confirmation.  
 After sending commands, it returns to the 'normal' state.
