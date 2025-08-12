@@ -50,6 +50,7 @@ enum Registers
   CoolSetpointTemp = 136,
   TankSetpointTemp = 137,
   ShiftSetpoint = 138,
+  ServiceMode = 142, // 0x02 - pump speed
   ReqMode = 144,
   PumpSpeed = 147,
   // Settings 192; // -> 0x1 room thermo, 0x80, anitfreeze, 0x04 solar prio, 0x40 cool prio, 0x08 heat prio, 0x10 steril
@@ -139,38 +140,7 @@ private:
     bool valid=false;
   };
 
-  void update_binary_sensor(const std::vector<std::pair<binary_sensor::BinarySensor* /*sensor*/, uint8_t /*mask*/>>& sensors, uint8_t value)
-  {
-    for(auto& sensor : sensors)
-    {
-      sensor.first->publish_state(value & sensor.second);
-    }
-  }
-
-  void update_sensor(sensor::Sensor* sensor, uint8_t value)
-  {
-    sensor->publish_state(*((int8_t*)&value));
-  }
-
-  void update_power_lsb(Power& power, uint8_t value)
-  {
-    power.write_lb(millis(), value);
-  }
-
-  void update_power_msb(sensor::Sensor* sensor, Power& power, uint8_t value)
-  {
-    power.write_mb(millis(), value);
-    if(power.is_valid())
-      sensor->publish_state(power.get_power());
-  }
-
-  void update_text_sensor(text_sensor::TextSensor* sensor, uint8_t value)
-  {
-    sensor->publish_state(std::to_string((uint32_t)value));
-  }
-
-  template<typename Type>
-  void update_current_mode(Type* type, uint8_t value)
+  std::string get_current_mode(uint8_t value)
   {
     std::string mode(value & 1 ? "on" : "off");
     if (value & 2) mode += " heat";
@@ -180,50 +150,116 @@ private:
     if (value & 64) mode += " quiet";
     if (value & 128) mode += " heater";
 
-    type->publish_state(mode);
+    return mode;
   }
 
-  void update_switch(switch_::Switch* sw, uint8_t value)
+  void register_select_if_present(const Registers& reg, select::Select* select, std::function<std::string(uint8_t value)> modifier = {})
   {
-    sw->publish_state(value & 0x40);
+    if(select)
+      registers[reg] = std::move([select = select, modifier = std::move(modifier)](uint8_t value)
+        { 
+          select->publish_state(modifier ? modifier(value) : std::to_string((uint32_t)value));
+        });
   }
 
-  void update_number(number::Number* number, uint8_t value)
+  void register_text_sensor_if_present(const Registers& reg, text_sensor::TextSensor* text_sensor, std::function<std::string(uint8_t value)> modifier = {})
   {
-    number->publish_state(*((int8_t*)&value));
+    if(text_sensor)
+      registers[reg] = std::move([text_sensor = text_sensor, modifier = std::move(modifier)](uint8_t value)
+        { 
+          text_sensor->publish_state(modifier ? modifier(value) : std::to_string((uint32_t)value));
+        });
+  }
+
+  void register_binary_sensor_if_present(const Registers& reg, const std::vector<std::pair<binary_sensor::BinarySensor* /*sensor*/, uint8_t /*mask*/>>& sensors)
+  {
+    if(std::any_of(sensors.begin(), sensors.end(), [](auto& sensor){return sensor.first != nullptr;}))
+      registers[reg] = std::move([&](uint8_t value)
+        { 
+          for(auto& sensor : sensors)
+          {
+            if(sensor.first)
+              sensor.first->publish_state(value & sensor.second);
+          }
+        });
+  }
+
+  void register_sensor_if_present(const Registers& reg, sensor::Sensor* sensor, std::function<uint8_t(uint8_t value)>&& modifier = {})
+  {
+    if(sensor)
+      registers[reg] = std::move([sensor = sensor, modifier = std::move(modifier)](uint8_t value)
+        { 
+          if(modifier)
+            value = modifier(value);
+          sensor->publish_state(*((int8_t*)&value));
+        });
+  }
+
+  void register_power_sensor_if_present(const Registers& reg_lsb, const Registers& reg_msb, sensor::Sensor* sensor, Power& power)
+  {
+    if(sensor)
+    {
+      registers[reg_lsb] = std::move([&power](uint8_t value)
+        { 
+          power.write_lb(millis(), value);
+        });
+      registers[reg_msb] = std::move([&power, sensor = sensor](uint8_t value)
+        { 
+          power.write_mb(millis(), value);
+          if(power.is_valid())
+            sensor->publish_state(power.get_power());
+        });
+    }
+  }
+
+  void register_switch_if_present(const Registers& reg, switch_::Switch* sw, std::function<uint8_t(uint8_t value)> modifier = {})
+  {
+    if(sw)
+      registers[reg] = std::move([sw = sw, modifier = std::move(modifier)](uint8_t value)
+        { 
+          sw->publish_state(modifier ? modifier(value) : value);
+        });
+  }
+
+  void register_number_if_present(const Registers& reg, number::Number* number, std::function<uint8_t(uint8_t value)> modifier = {})
+  {
+    if(number)
+      registers[reg] = std::move([number = number, modifier = std::move(modifier)](uint8_t value)
+        { 
+          if(modifier) 
+            value = modifier(value);
+          number->publish_state(*((int8_t*)&value));
+        });
   }
 
   void setup_registers_cbk()
   {
     static const std::vector<std::pair<binary_sensor::BinarySensor*, uint8_t>> defrost_reg_sensors({{defrost_binary_sensor_, 64}, {booster_binary_sensor_, 2}});
-    registers[Registers::Defrost] = std::bind(&AquareaComponent::update_binary_sensor, this, std::ref(defrost_reg_sensors), std::placeholders::_1);
-    registers[Registers::OutsideTemp] = std::bind(&AquareaComponent::update_sensor, this, outside_temperature_sensor_, std::placeholders::_1);
-    registers[Registers::OutletTemp] = std::bind(&AquareaComponent::update_sensor, this, outlet_temperature_sensor_, std::placeholders::_1);
-    registers[Registers::InletTemp] = std::bind(&AquareaComponent::update_sensor, this, inlet_temperature_sensor_, std::placeholders::_1);
-    registers[Registers::TankTemp] = std::bind(&AquareaComponent::update_sensor, this, tank_temperature_sensor_, std::placeholders::_1);
-    registers[Registers::Compressor] = std::bind(&AquareaComponent::update_sensor, this, compressor_value_sensor_, std::placeholders::_1);
-    registers[Registers::HeatLSB] = std::bind(&AquareaComponent::update_power_lsb, this, std::ref(heat_power), std::placeholders::_1);
-    registers[Registers::HeatMSB] = std::bind(&AquareaComponent::update_power_msb, this, heat_power_sensor_, std::ref(heat_power), std::placeholders::_1);
-    registers[Registers::CoolLSB] = std::bind(&AquareaComponent::update_power_lsb, this, std::ref(cool_power), std::placeholders::_1);
-    registers[Registers::CoolMSB] = std::bind(&AquareaComponent::update_power_msb, this, cool_power_sensor_, std::ref(cool_power), std::placeholders::_1);
-    registers[Registers::TankLSB] = std::bind(&AquareaComponent::update_power_lsb, this, std::ref(tank_power), std::placeholders::_1);
-    registers[Registers::TankMSB] = std::bind(&AquareaComponent::update_power_msb, this, tank_power_sensor_, std::ref(tank_power), std::placeholders::_1);
-    registers[Registers::PumpStage] = [&](uint8_t value){this->update_sensor(pump_speed_sensor_, value/16);};
-    registers[Registers::ErrorCode] = std::bind(&AquareaComponent::update_text_sensor, this, error_code_text_sensor_, std::placeholders::_1);
-    registers[Registers::LastErrorCode] = std::bind(&AquareaComponent::update_text_sensor, this, last_error_code_text_sensor_, std::placeholders::_1);
-    registers[Registers::Mode] = std::bind(&AquareaComponent::update_current_mode<text_sensor::TextSensor>, this, current_mode_text_sensor_, std::placeholders::_1);
-    registers[Registers::Force] = std::bind(&AquareaComponent::update_switch, this, force_switch_, std::placeholders::_1);
-    registers[Registers::HeatOutsideTempLow] = std::bind(&AquareaComponent::update_number, this, heat_out_temp_low_number_, std::placeholders::_1);
-    registers[Registers::HeatOutsideTempHigh] = std::bind(&AquareaComponent::update_number, this, heat_out_temp_high_number_, std::placeholders::_1);
-    registers[Registers::HeatWaterTempLow] = std::bind(&AquareaComponent::update_number, this, heat_water_temp_low_number_, std::placeholders::_1);
-    registers[Registers::HeatWaterTempHigh] = std::bind(&AquareaComponent::update_number, this, heat_water_temp_high_number_, std::placeholders::_1);
-    registers[Registers::HeatOffOutsideTemp] = std::bind(&AquareaComponent::update_number, this, heat_off_out_temp_number_, std::placeholders::_1);
-    registers[Registers::HeaterOnOutsideTemp] = std::bind(&AquareaComponent::update_number, this, heater_on_out_temp_number_, std::placeholders::_1);
-    registers[Registers::CoolSetpointTemp] = std::bind(&AquareaComponent::update_number, this, cool_setpoint_temp_number_, std::placeholders::_1);
-    registers[Registers::TankSetpointTemp] = std::bind(&AquareaComponent::update_number, this, tank_setpoint_temp_number_, std::placeholders::_1);
-    registers[Registers::ShiftSetpoint] = std::bind(&AquareaComponent::update_number, this, shift_setpoint_temp_number_, std::placeholders::_1);
-    registers[Registers::PumpSpeed] = std::bind(&AquareaComponent::update_number, this, pump_speed_number_, std::placeholders::_1);
-    registers[Registers::ReqMode] = std::bind(&AquareaComponent::update_current_mode<select::Select>, this, request_mode_select_, std::placeholders::_1);
+    register_binary_sensor_if_present(Registers::Defrost, defrost_reg_sensors);
+    register_sensor_if_present(Registers::OutsideTemp, outside_temperature_sensor_);
+    register_sensor_if_present(Registers::OutletTemp, outlet_temperature_sensor_);
+    register_sensor_if_present(Registers::InletTemp, inlet_temperature_sensor_);
+    register_sensor_if_present(Registers::TankTemp, tank_temperature_sensor_);
+    register_sensor_if_present(Registers::Compressor, compressor_value_sensor_);
+    register_power_sensor_if_present(Registers::HeatLSB, Registers::HeatMSB, heat_power_sensor_, heat_power);
+    register_power_sensor_if_present(Registers::CoolLSB, Registers::CoolMSB, cool_power_sensor_, cool_power);
+    register_power_sensor_if_present(Registers::TankLSB, Registers::TankMSB, tank_power_sensor_, tank_power);
+    register_sensor_if_present(Registers::PumpStage, pump_speed_sensor_, [](uint8_t value){ return value/16; });
+    register_text_sensor_if_present(Registers::ErrorCode, error_code_text_sensor_);
+    register_text_sensor_if_present(Registers::LastErrorCode, last_error_code_text_sensor_);
+    register_text_sensor_if_present(Registers::Mode, current_mode_text_sensor_, std::bind(&AquareaComponent::get_current_mode, this, std::placeholders::_1));
+    register_switch_if_present(Registers::Force, force_switch_, [](uint8_t value){ return value & 0x40; });
+    register_number_if_present(Registers::HeatOutsideTempLow, heat_out_temp_low_number_);
+    register_number_if_present(Registers::HeatOutsideTempHigh, heat_out_temp_high_number_);
+    register_number_if_present(Registers::HeatWaterTempLow, heat_water_temp_low_number_);
+    register_number_if_present(Registers::HeatWaterTempHigh, heat_water_temp_high_number_);
+    register_number_if_present(Registers::HeatOffOutsideTemp, heat_off_out_temp_number_);
+    register_number_if_present(Registers::HeaterOnOutsideTemp, heater_on_out_temp_number_);
+    register_number_if_present(Registers::CoolSetpointTemp, cool_setpoint_temp_number_);
+    register_number_if_present(Registers::TankSetpointTemp, tank_setpoint_temp_number_);
+    register_number_if_present(Registers::ShiftSetpoint, shift_setpoint_temp_number_);
+    register_number_if_present(Registers::PumpSpeed, pump_speed_number_, [](uint8_t value){ return value*16; });
+    register_select_if_present(Registers::ReqMode, request_mode_select_, std::bind(&AquareaComponent::get_current_mode, this, std::placeholders::_1));
   }
 
   float get_setup_priority() const override

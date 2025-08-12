@@ -75,6 +75,8 @@ text_sensor:
 
 binary_sensor:
   platform: aquarea
+  booster:
+    name: "Booster heater active"
   defrost:
     name: "Defrost active"
   booster:
@@ -96,24 +98,34 @@ number:
   platform: aquarea
   heat_out_temp_low:
     name: "Low heat outside temperature"
+    initial_value: -15
   heat_out_temp_high:
     name: "High heat outside temperature"
+    initial_value: 5
   heat_water_temp_low:
     name: "Low heat water temperature"
+    initial_value: 35
   heat_water_temp_high:
     name: "High heat water temperature"
+    initial_value: 31
   heat_off_out_temp:
     name: "Heat off outside temperature"
+    initial_value: 17
   heater_on_out_temp:
     name: "Heater On outside temperature"
+    initial_value: -15
   cool_setpoint_temp:
     name: "Cool setpoint temperature"
+    initial_value: 18
   tank_setpoint_temp:
     name: "Tank setpoint temperature"
+    initial_value: 50
   shift_setpoint_temp:
     name: "Shift setpoint temperature"
-  pump_speed:
-    name: "Water pump speed"
+    initial_value: 0
+#  pump_speed:
+#    name: "Water pump speed"
+#    initial_value: 4
 
 select:
   platform: aquarea
