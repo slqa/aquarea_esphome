@@ -77,6 +77,8 @@ binary_sensor:
   platform: aquarea
   defrost:
     name: "Defrost active"
+  booster:
+    name: "Booster heater active"
 
 button:
   - platform: restart

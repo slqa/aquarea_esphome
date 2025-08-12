@@ -1,13 +1,15 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import binary_sensor
-from esphome.const import ICON_RADIATOR
+from esphome.const import ICON_RADIATOR, ICON_HEATING_COIL
 from . import AquareaComponent, CONF_AQUAREA_ID
 
 CONF_Defrost = "defrost"
+CONF_Booster = "booster"
 
 TYPES = [
    CONF_Defrost,
+   CONF_Booster,
 ]
 
 CONFIG_SCHEMA = cv.All(
@@ -16,6 +18,9 @@ CONFIG_SCHEMA = cv.All(
             cv.GenerateID(CONF_AQUAREA_ID): cv.use_id(AquareaComponent),
             cv.Optional(CONF_Defrost): binary_sensor.binary_sensor_schema(
                 icon=ICON_RADIATOR,
+            ),
+            cv.Optional(CONF_Booster): binary_sensor.binary_sensor_schema(
+                icon=ICON_HEATING_COIL,
             ),
         }
     ).extend(cv.COMPONENT_SCHEMA)
