@@ -79,6 +79,7 @@ public:
 
 protected:
     SUB_BINARY_SENSOR(defrost);
+    SUB_BINARY_SENSOR(booster);
     SUB_SENSOR(outside_temperature);
     SUB_SENSOR(outlet_temperature);
     SUB_SENSOR(inlet_temperature);
@@ -138,9 +139,12 @@ private:
     bool valid=false;
   };
 
-  void update_binary_sensor(binary_sensor::BinarySensor* sensor, uint8_t value)
+  void update_binary_sensor(const std::vector<std::pair<binary_sensor::BinarySensor* /*sensor*/, uint8_t /*mask*/>>& sensors, uint8_t value)
   {
-    sensor->publish_state(value & 0x64);
+    for(auto& sensor : sensors)
+    {
+      sensor.first->publish_state(value & sensor.second);
+    }
   }
 
   void update_sensor(sensor::Sensor* sensor, uint8_t value)
@@ -191,7 +195,8 @@ private:
 
   void setup_registers_cbk()
   {
-    registers[Registers::Defrost] = std::bind(&AquareaComponent::update_binary_sensor, this, defrost_binary_sensor_, std::placeholders::_1);
+    static const std::vector<std::pair<binary_sensor::BinarySensor*, uint8_t>> defrost_reg_sensors({{defrost_binary_sensor_, 64}, {booster_binary_sensor_, 2}});
+    registers[Registers::Defrost] = std::bind(&AquareaComponent::update_binary_sensor, this, std::ref(defrost_reg_sensors), std::placeholders::_1);
     registers[Registers::OutsideTemp] = std::bind(&AquareaComponent::update_sensor, this, outside_temperature_sensor_, std::placeholders::_1);
     registers[Registers::OutletTemp] = std::bind(&AquareaComponent::update_sensor, this, outlet_temperature_sensor_, std::placeholders::_1);
     registers[Registers::InletTemp] = std::bind(&AquareaComponent::update_sensor, this, inlet_temperature_sensor_, std::placeholders::_1);
