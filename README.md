@@ -12,12 +12,13 @@ Thanks to this device, you are able to monitor heat pump states and issue your o
             |-------------------------|
 ```
 Device consists of brige PCB and D1 mini.
-![Brige schematic](images/schematic.png "schematic")
-
 I used hardware serial on pins D8/D7 and one pin for RTS from a D1 Mini ESP board. In a 'normal' situation, the D1 Mini only listens to communication between the remote and the heat pump, so you can have entity updates.
 When you want to issue a state change from Home Assistant, the RTS pin is set, blocking communication from the remote to the heat pump. The D1 Mini then sends the command and waits for confirmation.
 After sending commands, it returns to the 'normal' state.
 The Panasonic UART protocol has a baud_rate of 960, data_bits of 8, stop_bits of 1, parity of EVEN, and is inverted. My version of the bridge device realizes inversion at the hardware level, so there is no such setting in the YAML UART configuration.
+
+Alpha version of the PCB using ESP12E instead of D1 Mini is available here:
+![Brige schematic](schematic/aquarea/aquarea.svg "schematic")
 
 # How to use
 Follow normal ESPHome steps
