@@ -79,8 +79,6 @@ binary_sensor:
     name: "Booster heater active"
   defrost:
     name: "Defrost active"
-  booster:
-    name: "Booster heater active"
 
 button:
   - platform: restart
