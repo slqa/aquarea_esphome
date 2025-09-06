@@ -12,7 +12,7 @@ esp8266:
 # Enable logging
 logger:
   baud_rate: 0
-  level: DEBUG
+  level: WARN
 
 # Enable Home Assistant API
 api:
@@ -123,9 +123,6 @@ number:
   shift_setpoint_temp:
     name: "Shift setpoint temperature"
     initial_value: 0
-#  pump_speed:
-#    name: "Water pump speed"
-#    initial_value: 4
 
 select:
   platform: aquarea

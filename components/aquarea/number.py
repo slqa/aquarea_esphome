@@ -23,7 +23,7 @@ PumpSpeedNumber = aquarea_ns.class_("PumpSpeedNumber", number.Number)
 
 CONF_HeatOutsideTempLow = ("heat_out_temp_low", -20, 5, 1)
 CONF_HeatOutsideTempHigh = ("heat_out_temp_high", -5, 15, 1)
-CONF_HeatWaterTempLow = ("heat_water_temp_low", 30, 55, 1)
+CONF_HeatWaterTempLow = ("heat_water_temp_low", 25, 55, 1)
 CONF_HeatWaterTempHigh = ("heat_water_temp_high", 25, 45, 1)
 CONF_HeatOffOutsideTemp = ("heat_off_out_temp", 0, 20, 1)
 CONF_HeaterOnOutsideTemp = ("heater_on_out_temp", -15, 0, 1)
@@ -134,7 +134,7 @@ async def setup_conf(config, key, hub):
         nr = await number.new_number(number_config, min_value=key[1], max_value=key[2], step=key[3])
         cg.add(getattr(hub, f"set_{key[0]}_number")(nr))
         await cg.register_parented(nr, config[CONF_AQUAREA_ID])
-#        cg.add(nr.make_call().set_value(number_config[CONF_INITIAL_VALUE]).perform())
+        cg.add(nr.make_call().set_value(number_config[CONF_INITIAL_VALUE]).perform())
 
 async def to_code(config):
     hub = await cg.get_variable(config[CONF_AQUAREA_ID])
