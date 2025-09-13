@@ -19,6 +19,9 @@ The Panasonic UART protocol has a baud_rate of 960, data_bits of 8, stop_bits of
 Bridge PCB using ESP12E:
 ![Brige schematic](schematic/aquarea/aquarea.svg "schematic")
 
+![Brige view](schematic/aquarea/aquarea3d.png "view")
+![Brige view](schematic/aquarea/aquarea3d_bot.png "view_bottom")
+
 # How to use
 Follow normal ESPHome steps
 ```bash
