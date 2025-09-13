@@ -2,7 +2,7 @@ esphome:
   name: heatpump
 
 esp8266:
-  board: d1_mini
+  board: esp12e
 
 #mqtt:
   #broker: 192.168.0.1
@@ -136,14 +136,14 @@ select:
 
 uart:
     tx_pin:
-      number: D8
+      number: GPIO15
     rx_pin:
-      number: D7
+      number: GPIO13
     baud_rate: 960
     data_bits: 8
     stop_bits: 1
     parity: EVEN
 
 aquarea:
-  rts_pin: D1
+  rts_pin: GPIO5
 
