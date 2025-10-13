@@ -30,6 +30,37 @@ docker run --rm -v "${PWD}":/config -it ghcr.io/esphome/esphome compile aquarea.
 docker run --rm -v "${PWD}":/config -it ghcr.io/esphome/esphome run aquarea.yaml
 ```
 
+## 💾 Flashing Firmware via UART
+
+Follow these steps to successfully flash your device's firmware using a UART adapter.
+
+### 1. Wiring and Connection
+
+Connect your **UART adapter** (or an ESP board with a USB level shifter) to the board's gold pin connector using the following pins:
+
+| Pin | Function | Adapter Connection |
+| :--- | :--- | :--- |
+| **3.3V** | Power | Connect to **3.3V** on the adapter. |
+| **TX** | Transmit | Connect to **RX** on the adapter. |
+| **RX** | Receive | Connect to **TX** on the adapter. |
+| **Gnd** | Ground | Connect to **Gnd** on the adapter. |
+
+> ⚠️ **IMPORTANT:** If the PCB is still powered by the heat pump, **DO NOT CONNECT the 3.3V pin** from your adapter.
+
+---
+
+### 2. Entering Program Mode (Flash Mode)
+
+To put the board into Flash Mode:
+
+1.  **Short the PRG point:** Use a screwdriver or jumper wire to short the **PRG** test point (sometimes marked as old **SW1**).
+2.  **Power Cycle:** While the **PRG** point is still shorted, quickly **power cycle** the PCB. You can do this by:
+    * Disconnecting and immediately reconnecting the power **3.3V** pin.
+    * Unplugging and replugging the main heat pump connector from the PCB.
+    * Cycling the main power to the heat pump unit.
+3.  **Release Short:** Once the power cycle is complete, **release the short** on the **PRG** point.
+
+The device is now in **Flash Mode** and ready to accept new firmware.
 # Home assistant entites
 
 ![Aquarea controls](images/aquarea_controls.png "HA Controls")
