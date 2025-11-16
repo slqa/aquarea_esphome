@@ -542,6 +542,143 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Device:Fuse_Small"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.254)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "F"
+				(at 0 -1.524 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Fuse_Small"
+				(at 0 1.524 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Fuse, small symbol"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "fuse"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "*Fuse*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "Fuse_Small_0_1"
+				(rectangle
+					(start -1.27 0.508)
+					(end 1.27 -0.508)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 0) (xy 1.27 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "Fuse_Small_1_1"
+				(pin passive line
+					(at -2.54 0 0)
+					(length 1.27)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 0 180)
+					(length 1.27)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Device:R_Small"
 			(pin_numbers
 				(hide yes)
@@ -1417,157 +1554,6 @@
 					(at 5.08 0 180)
 					(length 2.54)
 					(name "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
-		(symbol "Switch:SW_Push_Open"
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 1.016)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "SW"
-				(at 0 2.54 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "SW_Push_Open"
-				(at 0 -1.905 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 5.08 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "~"
-				(at 0 5.08 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Push button switch, push-to-open, generic, two pins"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "switch normally-closed pushbutton push-button"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "SW_Push_Open_0_1"
-				(polyline
-					(pts
-						(xy -2.54 -0.635) (xy 2.54 -0.635)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(circle
-					(center -2.032 0)
-					(radius 0.508)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 -0.635) (xy 0 1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(circle
-					(center 2.032 0)
-					(radius 0.508)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(pin passive line
-					(at -5.08 0 0)
-					(length 2.54)
-					(name "A"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(symbol "SW_Push_Open_1_1"
-				(pin passive line
-					(at 5.08 0 180)
-					(length 2.54)
-					(name "B"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2542,12 +2528,6 @@
 		(uuid "9859ea5f-f6da-4117-8b2a-76d76dcaa3eb")
 	)
 	(junction
-		(at 87.63 31.75)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "ccea9e16-f4f8-4503-99e5-8f19eab46ebc")
-	)
-	(junction
 		(at 71.12 25.4)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2646,16 +2626,6 @@
 			(type default)
 		)
 		(uuid "0f9f74e6-27b1-4600-97b9-a1f3abf0fbbb")
-	)
-	(wire
-		(pts
-			(xy 78.74 31.75) (xy 87.63 31.75)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "108a4631-21d2-4c3b-9210-7a95d38c7496")
 	)
 	(wire
 		(pts
@@ -2799,7 +2769,7 @@
 	)
 	(wire
 		(pts
-			(xy 87.63 31.75) (xy 90.17 31.75)
+			(xy 78.74 31.75) (xy 90.17 31.75)
 		)
 		(stroke
 			(width 0)
@@ -2989,16 +2959,6 @@
 	)
 	(wire
 		(pts
-			(xy 30.48 40.64) (xy 33.02 40.64)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c4ca747d-2245-47b0-96c4-6bd01e3903fa")
-	)
-	(wire
-		(pts
 			(xy 116.84 80.01) (xy 116.84 88.9)
 		)
 		(stroke
@@ -3059,6 +3019,16 @@
 	)
 	(wire
 		(pts
+			(xy 38.1 40.64) (xy 41.91 40.64)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "daa85e74-3bab-4ecb-acc7-cd8a5a3ea59c")
+	)
+	(wire
+		(pts
 			(xy 95.25 105.41) (xy 99.06 105.41)
 		)
 		(stroke
@@ -3096,6 +3066,16 @@
 			(type default)
 		)
 		(uuid "e0e238be-f350-408e-a750-b3f9ee06c549")
+	)
+	(wire
+		(pts
+			(xy 33.02 40.64) (xy 30.48 40.64)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e24383a9-da6d-4883-b123-8a12ba5953b3")
 	)
 	(wire
 		(pts
@@ -3418,7 +3398,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 33.02 40.64 0)
+		(at 41.91 40.64 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3427,7 +3407,7 @@
 		(fields_autoplaced yes)
 		(uuid "0dcc3f9d-2262-4807-bdee-96edca6a7e08")
 		(property "Reference" "#PWR01"
-			(at 33.02 44.45 0)
+			(at 41.91 44.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3436,7 +3416,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 33.02 35.56 0)
+			(at 41.91 35.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3444,7 +3424,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 33.02 40.64 0)
+			(at 41.91 40.64 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3453,7 +3433,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 33.02 40.64 0)
+			(at 41.91 40.64 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3462,7 +3442,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 33.02 40.64 0)
+			(at 41.91 40.64 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3483,7 +3463,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Switch:SW_Push_Open")
+		(lib_id "Switch:SW_Push")
 		(at 92.71 26.67 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -3493,7 +3473,7 @@
 		(fields_autoplaced yes)
 		(uuid "1073cf2b-38fb-4244-9bd5-83acb5adec20")
 		(property "Reference" "SW2"
-			(at 92.71 20.32 0)
+			(at 92.71 19.05 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3501,7 +3481,7 @@
 			)
 		)
 		(property "Value" "RESET"
-			(at 92.71 22.86 0)
+			(at 92.71 21.59 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3526,7 +3506,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Push button switch, push-to-open, generic, two pins"
+		(property "Description" "Push button switch, generic, two pins"
 			(at 92.71 26.67 0)
 			(effects
 				(font
@@ -4779,6 +4759,74 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:Fuse_Small")
+		(at 35.56 40.64 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "5318e8e6-f325-41a8-8493-446d8bef2e04")
+		(property "Reference" "F1"
+			(at 35.56 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "250mA"
+			(at 35.56 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Fuse:Fuse_1812_4532Metric"
+			(at 35.56 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 35.56 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Fuse, small symbol"
+			(at 35.56 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "1873ebeb-fc00-4cdf-adbb-1cad5dbbe825")
+		)
+		(pin "1"
+			(uuid "13e8404c-cba2-44fa-8c42-fff8f5ce3cd0")
+		)
+		(instances
+			(project ""
+				(path "/ea22a014-a242-4a47-8f14-43aa24d75b8c"
+					(reference "F1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "aquarea-eagle-import:GND1")
 		(at 95.25 118.11 0)
 		(unit 1)
@@ -5331,71 +5379,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+3V3")
-		(at 180.34 22.86 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "a307fb25-b72b-4b14-ba37-3c60af5bb803")
-		(property "Reference" "#PWR011"
-			(at 176.53 22.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3V3"
-			(at 184.404 22.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 180.34 22.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 180.34 22.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 180.34 22.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "c1099aaf-abda-4155-9a10-10635aea019a")
-		)
-		(instances
-			(project "aquarea"
-				(path "/ea22a014-a242-4a47-8f14-43aa24d75b8c"
-					(reference "#PWR011")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R_Small")
 		(at 33.02 90.17 90)
 		(unit 1)
@@ -5875,72 +5858,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:PWR_FLAG")
-		(at 180.34 22.86 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "b81fe0d7-8661-416d-abab-7abd4233758f")
-		(property "Reference" "#FLG01"
-			(at 180.34 20.955 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "PWR_FLAG"
-			(at 180.34 17.78 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 180.34 22.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 180.34 22.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Special symbol for telling ERC where power comes from"
-			(at 180.34 22.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "d150cda5-9c36-4986-8345-bb115d39b028")
-		)
-		(instances
-			(project ""
-				(path "/ea22a014-a242-4a47-8f14-43aa24d75b8c"
-					(reference "#FLG01")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "aquarea-eagle-import:GND1")
 		(at 54.61 97.79 0)
 		(unit 1)
@@ -6201,6 +6118,71 @@
 		)
 	)
 	(symbol
+		(lib_id "aquarea-eagle-import:GND1")
+		(at 82.55 29.21 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "c602c6f1-847e-4531-8477-93f9cdf74aea")
+		(property "Reference" "#SUPPLY014"
+			(at 82.55 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 86.106 29.718 0)
+			(effects
+				(font
+					(size 1.778 1.5113)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 82.55 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 82.55 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "SUPPLY SYMBOL"
+			(at 82.55 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "75f7ebe8-47ab-438c-af66-a3049ccacf98")
+		)
+		(instances
+			(project "aquarea"
+				(path "/ea22a014-a242-4a47-8f14-43aa24d75b8c"
+					(reference "#SUPPLY014")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Regulator_Linear:AMS1117-3.3")
 		(at 60.96 25.4 0)
 		(unit 1)
@@ -6273,7 +6255,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_Small")
-		(at 87.63 29.21 0)
+		(at 85.09 26.67 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6281,7 +6263,7 @@
 		(dnp no)
 		(uuid "cddc6c03-925b-4ed1-9f65-af5ef87eb721")
 		(property "Reference" "R3"
-			(at 85.598 30.226 90)
+			(at 86.36 24.638 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6290,7 +6272,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 87.63 30.226 90)
+			(at 86.106 26.67 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6299,7 +6281,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_1206_3216Metric"
-			(at 87.63 29.21 0)
+			(at 85.09 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6308,7 +6290,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 87.63 29.21 0)
+			(at 85.09 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6317,7 +6299,7 @@
 			)
 		)
 		(property "Description" "Resistor, small symbol"
-			(at 87.63 29.21 0)
+			(at 85.09 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
