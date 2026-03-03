@@ -271,7 +271,7 @@ private:
   {
     ESP_LOGD("aquarea", "%s", __func__);
     setup_registers_cbk();
-    rts_pin->pin_mode(FLAG_OUTPUT);
+    rts_pin->pin_mode(gpio::FLAG_OUTPUT);
     rts_pin->digital_write(false);
   }
 
